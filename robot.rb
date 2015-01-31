@@ -1,4 +1,3 @@
-require 'set'
 class Robot
 
   def initialize(persistence = NamePersistence)
@@ -31,6 +30,7 @@ class Robot
   end
 end
 
+require 'set'
 class NamePersistence
   def self.add(name)
     collection.add?(name)
