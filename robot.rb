@@ -1,6 +1,11 @@
+require 'set'
 class Robot
+  def self.assigned_names
+    @@assigned_names ||= Set.new
+  end
+
   def name
-    @name ||= (('a'..'z').to_a + ('A'..'Z').to_a).sample(2).join + rand.to_s[2,3]
+    @name ||= generate_name
   end
 
   def reset
@@ -10,4 +15,16 @@ class Robot
   private
 
   attr_writer :name
+
+  def new_name
+    ('A'..'Z').to_a.sample(2).join + rand.to_s[2,3]
+  end
+
+  def generate_name
+    temp_name = new_name
+    until self.class.assigned_names.add?(temp_name)
+      temp_name = new_name
+    end
+    temp_name
+  end
 end
