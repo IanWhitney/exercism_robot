@@ -33,7 +33,7 @@ class RobotTest < MiniTest::Unit::TestCase
   end
 end
 
-class NamePersistenceTest < MiniTest::Unit::TestCase
+class NamePersistenceTest < MiniTest::Test
   def teardown
     NamePersistence.clear!
   end
