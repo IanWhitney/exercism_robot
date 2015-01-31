@@ -27,9 +27,18 @@ class RobotTest < MiniTest::Unit::TestCase
 end
 
 class NamePersistenceTest < MiniTest::Unit::TestCase
-  def test_add
+  def teardown
+    NamePersistence.clear!
+  end
+
+  def test_adding_returns_a_non_nil
     name = "test"
     assert NamePersistence.add(name)
+  end
+
+  def test_adding_something_already_added_returns_nil
+    name = "test"
+    NamePersistence.add(name)
     assert_nil NamePersistence.add(name)
   end
 end
