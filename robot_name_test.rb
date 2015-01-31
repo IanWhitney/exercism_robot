@@ -24,6 +24,13 @@ class RobotTest < MiniTest::Unit::TestCase
     assert name != name2
     assert_match /^[A-Z]{2}\d{3}$/, name2
   end
+
+  def test_name_is_added_to_persistence
+    @persistence = MiniTest::Mock.new
+    @persistence.expect :add, true, [String]
+    Robot.new(@persistence).name
+    assert @persistence.verify
+  end
 end
 
 class NamePersistenceTest < MiniTest::Unit::TestCase
