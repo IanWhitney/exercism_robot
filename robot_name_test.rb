@@ -25,3 +25,11 @@ class RobotTest < MiniTest::Unit::TestCase
     assert_match /^[A-Z]{2}\d{3}$/, name2
   end
 end
+
+class NamePersistenceTest < MiniTest::Unit::TestCase
+  def test_add
+    name = "test"
+    assert NamePersistence.add(name)
+    assert_nil NamePersistence.add(name)
+  end
+end

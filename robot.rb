@@ -28,3 +28,16 @@ class Robot
     temp_name
   end
 end
+
+class NamePersistence
+  def self.add(name)
+    collection.add?(name)
+  end
+
+  private
+
+  def self.collection
+    @@collection ||= Set.new
+  end
+end
+
