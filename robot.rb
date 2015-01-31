@@ -1,7 +1,8 @@
 require 'set'
 class Robot
-  def self.assigned_names
-    @@assigned_names ||= Set.new
+
+  def initialize(persistence = NamePersistence)
+    self.persistence = persistence
   end
 
   def name
@@ -15,6 +16,7 @@ class Robot
   private
 
   attr_writer :name
+  attr_accessor :persistence
 
   def new_name
     ('A'..'Z').to_a.sample(2).join + rand.to_s[2,3]
@@ -22,7 +24,7 @@ class Robot
 
   def generate_name
     temp_name = new_name
-    until self.class.assigned_names.add?(temp_name)
+    until persistence.add(temp_name)
       temp_name = new_name
     end
     temp_name
