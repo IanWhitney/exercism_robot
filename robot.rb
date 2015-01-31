@@ -36,6 +36,10 @@ class NamePersistence
     collection.add?(name)
   end
 
+  def self.clear!
+    @@collection = nil
+  end
+
   private
 
   def self.collection
