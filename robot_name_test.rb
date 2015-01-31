@@ -28,7 +28,7 @@ class RobotTest < MiniTest::Unit::TestCase
   def test_name_is_added_to_persistence
     @persistence = MiniTest::Mock.new
     @persistence.expect :add, true, [String]
-    Robot.new(@persistence).name
+    Robot.new(persistence: @persistence).name
     assert @persistence.verify
   end
 end

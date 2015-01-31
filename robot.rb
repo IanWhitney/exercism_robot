@@ -1,5 +1,5 @@
 class Robot
-  def initialize(persistence = NamePersistence)
+  def initialize(persistence: NamePersistence)
     self.persistence = persistence
   end
 
