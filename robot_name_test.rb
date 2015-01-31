@@ -27,9 +27,17 @@ class RobotTest < MiniTest::Unit::TestCase
 
   def test_name_is_added_to_persistence
     @persistence = MiniTest::Mock.new
-    @persistence.expect :add, true, [String]
+    @persistence.expect :add, true, [NameGenerator]
     Robot.new(persistence: @persistence).name
     assert @persistence.verify
+  end
+
+  def test_name_is_created_by_namegenerator
+    @generator = MiniTest::Mock.new
+    @generator.expect :build, "AB123"
+    robot = Robot.new(generator: @generator)
+    assert_equal "AB123", robot.name
+    assert @generator.verify
   end
 end
 
@@ -47,5 +55,12 @@ class NamePersistenceTest < MiniTest::Test
     name = "test"
     NamePersistence.add(name)
     assert_nil NamePersistence.add(name)
+  end
+end
+
+class NameGeneratorTest < MiniTest::Test
+  def test_build_returns_a_robot_name_string
+    name = NameGenerator.build
+    assert_match /^[A-Z]{2}\d{3}$/, name
   end
 end
