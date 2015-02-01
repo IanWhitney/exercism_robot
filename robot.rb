@@ -48,4 +48,3 @@ class NamePersistence
     @@collection ||= Set.new
   end
 end
-
