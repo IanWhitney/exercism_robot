@@ -2,6 +2,10 @@ require 'minitest/autorun'
 require_relative 'robot'
 
 class RobotTest < MiniTest::Unit::TestCase
+  def teardown
+    NamePersistence.clear!
+  end
+
   def test_has_name
     assert_match /^[A-Z]{2}\d{3}$/, Robot.new.name
   end
@@ -38,6 +42,22 @@ class RobotTest < MiniTest::Unit::TestCase
     robot = Robot.new(generator: @generator)
     assert_equal "AB123", robot.name
     assert @generator.verify
+  end
+
+  def test_names_are_unique
+    @generator = NameGeneratorDouble
+    robot = Robot.new(generator: @generator)
+    assert_equal "AB123", robot.name
+
+    robot = Robot.new(generator: @generator)
+    assert_equal "ZZ789", robot.name
+  end
+end
+
+class NameGeneratorDouble
+  @@names = %w(AB123 AB123 ZZ789)
+  def self.build
+    @@names.shift
   end
 end
 
